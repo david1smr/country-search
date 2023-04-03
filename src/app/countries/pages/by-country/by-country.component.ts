@@ -13,6 +13,9 @@ export class ByCountryComponent {
   public hasError: boolean = false;
   public countries: Country[] = [];
 
+  public suggestedCountries: Country[] = [];
+  public showSuggestions: boolean = false;
+
   constructor(private countryService: CountryService) {}
 
   search(term: string) {
@@ -32,6 +35,25 @@ export class ByCountryComponent {
 
   sugestions(term: string) {
     this.hasError = false;
+    this.term = term;
+
+    this.showSuggestions = term !== '' ? true : false;
+    
+    this.countryService.searchCountryByName(term)
+      .subscribe(
+        {
+          next: (countries) => {
+            this.suggestedCountries = countries.splice(0,5);
+          },
+          error: (err) => {
+            this.suggestedCountries  = [];
+          }
+        })
+  }
+
+  searchSuggested(term: string) {
+    this.search(term);
+    this.showSuggestions = false;
   }
 
 }

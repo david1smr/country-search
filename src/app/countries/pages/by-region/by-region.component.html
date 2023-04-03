@@ -1,24 +1,23 @@
-<h2>By region</h2>
-<hr />
-
-<div class="row">
-    <div class="col">
-        <app-country-input
-            (onEnter)="search($event)"
-            (onDebounce)="sugestions($event)"
-            placeholder="Search region..."
-        >
-        </app-country-input>
+<div class="animate__animated animate__fadeIn animate__faster">
+    <h2>By region <small>{{activeRegion | titlecase}}</small></h2>
+    <hr />
+    
+    <h5>Select the region</h5>
+    
+    <div class="row">
+        <div class="col">
+            <button *ngFor="let region of regions" 
+                    [class]="getClassCSS(region)"
+                    (click)="acttivateRegion(region)">
+                {{region}}
+            </button>
+        </div>
     </div>
+    <hr />
 </div>
 
-<hr />
 
-<div *ngIf="hasError" class="alert alert-danger">
-    Nothing was found with the term {{term}}
-</div>
-
-<div *ngIf="!hasError && countries.length > 0" class="row">
+<div *ngIf="countries.length > 0" class="row">
     <div class="col">
         <app-country-table [countries]="countries"></app-country-table>
     </div>

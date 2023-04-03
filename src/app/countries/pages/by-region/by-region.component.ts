@@ -8,28 +8,33 @@ import { CountryService } from '../../services/country.service';
   styleUrls: ['./by-region.component.css']
 })
 export class ByRegionComponent {
-  public term: string = '';
-  public hasError: boolean = false;
   public countries: Country[] = [];
+
+  public regions: string [] = ['africa', 'americas', 'asia', 'europe', 'oceania']
+  public activeRegion: string = '';
 
   constructor(private countryService: CountryService) {}
 
+  getClassCSS (region:string): string {
+    return (region === this.activeRegion) ? 'btn btn-primary' : 'btn btn-outline-primary'
+  }
+
+  acttivateRegion( region: string) {
+    if (region != this.activeRegion) {
+      this.activeRegion = region;
+      this.search(this.activeRegion);
+    }
+  }
+
   search(term: string) {
-    this.hasError = false;
-    this.term = term;
     this.countryService.searchCountryByRegion(term)
       .subscribe({
         next: (data) => {
           this.countries = data;
         },
         error: (err) => {
-          this.hasError = true;
           this.countries = [];
         }
       })
-  }
-
-  sugestions(term: string) {
-    this.hasError = false;
   }
 }
