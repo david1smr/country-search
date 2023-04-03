@@ -1,3 +1,7 @@
+#Description
+
+Web app to search countries by name, capital or region. Using REST Countries API. Example deployed: `https://elegant-palmier-b64e01.netlify.app`
+
 # CountriesApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
